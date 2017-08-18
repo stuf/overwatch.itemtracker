@@ -1,0 +1,33 @@
+{
+  "name": "overwatch.itemtracker",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "atom.storage": "^0.5.3",
+    "atom.undo": "^0.5.3",
+    "bootstrap": "4.0.0-beta",
+    "karet": "^1.2.2",
+    "karet.util": "^0.13.1",
+    "kefir": "^3.7.3",
+    "partial.lenses": "^11.17.0",
+    "ramda": "^0.24.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "enzyme": "^2.9.1",
+    "jest-enzyme": "^3.7.0",
+    "jsverify": "^0.8.2",
+    "react-scripts": "1.0.11",
+    "react-test-renderer": "^15.6.1",
+    "sinon": "^3.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
