@@ -6,6 +6,9 @@ import * as L from 'partial.lenses';
 import { addPropsFromContext } from '../helpers';
 
 import { EntryList } from './controls';
+import {
+  Entry as E
+} from './meta';
 
 //
 
@@ -18,9 +21,12 @@ const CharacterPage = ({ state, match }) => {
   const displayName = U.view('name', char);
   const groups = U.view('items', char);
 
-  const allItems = char.map(L.collect(['items', L.elems, 'data', L.elems]));
-  const itemCount = allItems.map(L.count(L.elems));
-  const doneCount = allItems.map(L.countIf(L.isDefined('completed'), L.elems))
+  const allItems = E.allItems(char);
+
+  const itemStatus =
+    U.seq([E.completedItemCount, E.itemCount],
+          U.map(fn => fn(allItems)),
+          U.join(' / '));
 
   return (
     <div>
@@ -28,7 +34,7 @@ const CharacterPage = ({ state, match }) => {
 
       <h2>{displayName}</h2>
 
-      {doneCount} / {itemCount}
+      {itemStatus}
 
       <div className="mt-3">
         {U.seq(groups,
