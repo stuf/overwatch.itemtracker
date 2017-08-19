@@ -43,6 +43,10 @@ export const Entry = ({ completed, item }) => {
     <li className={U.cns('list-group-item', U.ift(completed, 'active'))}
         onClick={toggleState(completed)}>
       {G.nameFor(item)}
+
+      <span className="badge badge-primary ml-2">
+        {E.costForQuality(item)}
+      </span>
     </li>
   );
 };

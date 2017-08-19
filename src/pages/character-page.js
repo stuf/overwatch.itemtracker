@@ -28,19 +28,29 @@ const CharacterPage = ({ state, match }) => {
 
       <CompletionStatus {...{ items: E.allItems(char) }} />
 
-      <div className="mt-3">
-        {U.seq(U.view('items', char),
-          U.mapElems((group, index) =>
-            <div className="card mt-3"
-                 style={{ float: 'left', width: '33%' }}
-                 key={index}>
-              <div className="card-header">
-                {U.view('id', group)}
-                <CompletionStatus {...{ items: G.dataFor(group) }} />
-              </div>
+      <div className="container-fluid">
+        <div className="row">
+          {U.seq(U.view('items', char),
+            U.mapElems((group, index) =>
+              <div className="col-md-3 px-1">
+                <div className="card mx-0 px-0"
+                      key={index}>
+                  <div className="card-header">
+                    <div className="row">
+                      <div className="col">
+                        {G.idFor(group)}
+                      </div>
+                      <div className="col-xs-2 text-right">
+                        <CompletionStatus {...{ items: G.dataFor(group),
+                                                className: '' }} />
+                      </div>
+                    </div>
+                  </div>
 
-              <EntryList items={G.dataFor(group)} />
-            </div>))}
+                  <EntryList items={G.dataFor(group)} />
+                </div>
+              </div>))}
+        </div>
       </div>
     </div>
   )
