@@ -1,7 +1,6 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'ramda';
-import * as L from 'partial.lenses';
 
 import {
   Generic as G,

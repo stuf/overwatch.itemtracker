@@ -1,8 +1,7 @@
 import * as React from 'karet';
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 import { addPropsFromContext } from '../helpers';
