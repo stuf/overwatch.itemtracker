@@ -5,8 +5,10 @@ import * as L from 'partial.lenses';
 
 import { addPropsFromContext } from '../helpers';
 
-import { EntryList } from './controls';
+import { EntryList, CompletionStatus } from './controls';
 import {
+  Character as Char,
+  Generic as G,
   Entry as E
 } from './meta';
 
@@ -15,36 +17,29 @@ import {
 const CharacterPage = ({ state, match }) => {
   const { name } = match.params;
 
-  const chars = U.view('data', state);
-  const char = U.view(L.find(R.whereEq({ id: name })), chars);
-
-  const displayName = U.view('name', char);
-  const groups = U.view('items', char);
-
-  const allItems = E.allItems(char);
-
-  const itemStatus =
-    U.seq([E.completedItemCount, E.itemCount],
-          U.map(R.apply(R.__, R.of(allItems))),
-          U.join(' / '));
+  const chars = G.dataFor(state);
+  const char = Char.forName(name, chars)
 
   return (
     <div>
       <hr />
 
-      <h2>{displayName}</h2>
+      <h2>{G.nameFor(char)}</h2>
 
-      {itemStatus}
+      <CompletionStatus {...{ items: E.allItems(char) }} />
 
       <div className="mt-3">
-        {U.seq(groups,
+        {U.seq(U.view('items', char),
           U.mapElems((group, index) =>
             <div className="card mt-3"
                  style={{ float: 'left', width: '33%' }}
-                key={index}>
-              <div className="card-header">{U.view('id', group)}</div>
+                 key={index}>
+              <div className="card-header">
+                {U.view('id', group)}
+                <CompletionStatus {...{ items: G.dataFor(group) }} />
+              </div>
 
-              <EntryList items={U.view('data', group)} />
+              <EntryList items={G.dataFor(group)} />
             </div>))}
       </div>
     </div>

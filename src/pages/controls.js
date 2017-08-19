@@ -7,10 +7,18 @@ import {
 
 import {
   Generic as G,
-  EntryList as EL
+  EntryList as EL,
+  Entry as E
 } from './meta';
 
 //
+
+export const CompletionStatus = ({ items }) =>
+  <div>
+    {U.seq([E.completedItemCount, E.itemCount],
+           U.map(R.apply(R.__, R.of(items))),
+           U.join(' / '))}
+  </div>;
 
 export const NavBar = ({ state }) =>
   <div className="mt-3" style={{ textAlign: 'center' }}>
