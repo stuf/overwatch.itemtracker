@@ -25,7 +25,7 @@ const CharacterPage = ({ state, match }) => {
 
   const itemStatus =
     U.seq([E.completedItemCount, E.itemCount],
-          U.map(fn => fn(allItems)),
+          U.map(R.apply(R.__, R.of(allItems))),
           U.join(' / '));
 
   return (
