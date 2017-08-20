@@ -10,7 +10,16 @@ import {
 
 export const isCompleted = L.isDefined('completed');
 
-export const charItemsT = ['items', L.elems, 'data', L.elems];
+export const charItemsT = ['items',
+                           L.elems,
+                           'data',
+                           L.elems,
+                           L.augment({
+                             cost: r => {
+                               console.log({ r, q: r.quality, c: Cost[r.quality] });
+                               return Cost[r.quality];
+                             }
+                           })];
 
 //
 
@@ -24,7 +33,8 @@ export const Generic = {
   idFor: U.view('id'),
   dataFor: U.view('data'),
   nameFor: U.view('name'),
-  qualityFor: U.view('quality')
+  qualityFor: U.view('quality'),
+  itemsFor: U.view('items')
 };
 
 //

@@ -33,6 +33,25 @@ export const NavBar = ({ state }) =>
 
 //
 
+export const EntryGroupHeader = ({ id, group }) =>
+  <header className="card-header">
+    <div className="row">
+      <div className="col">{id}</div>
+      <div className="col-xs-4 text-right">
+        <CompletionStatus {...{ items: G.dataFor(group),
+                                className: '' }} />
+      </div>
+    </div>
+  </header>;
+
+export const EntryGroup = () =>
+  <div className="col-sm-3 px-1">
+    <div className="card mx-0 px-0">
+    </div>
+  </div>;
+
+//
+
 const toggleState = atom => e => {
   e.preventDefault();
   atom.modify(R.not);

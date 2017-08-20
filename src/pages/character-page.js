@@ -5,7 +5,7 @@ import * as L from 'partial.lenses';
 
 import { addPropsFromContext } from '../helpers';
 
-import { EntryList, CompletionStatus } from './controls';
+import { EntryList, CompletionStatus, EntryGroupHeader } from './controls';
 import {
   Character as Char,
   Generic as G,
@@ -18,7 +18,9 @@ const CharacterPage = ({ state, match }) => {
   const { name } = match.params;
 
   const chars = G.dataFor(state);
-  const char = Char.forName(name, chars)
+  const char = Char.forName(name, chars);
+
+  const items = G.itemsFor(char);
 
   return (
     <div>
@@ -30,26 +32,21 @@ const CharacterPage = ({ state, match }) => {
 
       <div className="container-fluid">
         <div className="row">
-          {U.seq(U.view('items', char),
-            U.mapElems((group, index) =>
-              <div className="col-md-3 px-1">
-                <div className="card mx-0 px-0"
-                      key={index}>
-                  <div className="card-header">
-                    <div className="row">
-                      <div className="col">
-                        {G.idFor(group)}
-                      </div>
-                      <div className="col-xs-2 text-right">
-                        <CompletionStatus {...{ items: G.dataFor(group),
-                                                className: '' }} />
-                      </div>
-                    </div>
-                  </div>
+          {U.seq(items,
+            U.indices,
+            U.mapCached(i => {
+              const group = U.view(i, items);
+              const id = G.idFor(group);
 
-                  <EntryList items={G.dataFor(group)} />
+              return (
+                <div className="col-md-3 px-1" key={i}>
+                  <div className="card mx-0 px-0">
+                    <EntryGroupHeader id={id} group={group} />
+                    <EntryList items={G.dataFor(group)} />
+                  </div>
                 </div>
-              </div>))}
+              )
+          }))}
         </div>
       </div>
     </div>
