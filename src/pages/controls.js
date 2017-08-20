@@ -64,7 +64,7 @@ export const Entry = ({ completed, item }) => {
       {G.nameFor(item)}
 
       <span className="badge badge-primary ml-2">
-        {E.costForQuality(item)}
+        {G.costFor(item)}
       </span>
     </li>
   );

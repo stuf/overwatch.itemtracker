@@ -28,6 +28,8 @@ const CharacterPage = ({ state, match }) => {
 
       <h2>{G.nameFor(char)}</h2>
 
+      {E.totalCost(items)}
+
       <CompletionStatus {...{ items: E.allItems(char) }} />
 
       <div className="container-fluid">

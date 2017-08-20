@@ -6,6 +6,10 @@ import * as L from 'partial.lenses';
 import * as State from './state';
 import IndexPage from './pages';
 import itemData from './data/items.json';
+import { Cost } from './constants';
+import {
+  Item as I
+} from './pages/meta';
 
 //
 
@@ -14,8 +18,17 @@ const transformItems =
   R.compose(R.map(intoDataPair),
             R.toPairs);
 
+const addItemCosts =
+  L.modify([L.elems,
+            'data',
+            L.elems],
+            v => R.assoc('cost', Cost[v.quality], v));
+
 const characterData = L.collect(L.values, itemData);
-const dataTransformL = [L.elems, 'items', L.modifyOp(transformItems)]
+const dataTransformL = [L.elems,
+                        'items',
+                        L.seq(L.modifyOp(transformItems),
+                              L.modifyOp(addItemCosts))]
 const dataModified = L.transform(dataTransformL, characterData);
 
 const state = State.createStore({ data: dataModified });

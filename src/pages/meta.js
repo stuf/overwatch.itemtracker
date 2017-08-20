@@ -13,13 +13,14 @@ export const isCompleted = L.isDefined('completed');
 export const charItemsT = ['items',
                            L.elems,
                            'data',
-                           L.elems,
-                           L.augment({
-                             cost: r => {
-                               console.log({ r, q: r.quality, c: Cost[r.quality] });
-                               return Cost[r.quality];
-                             }
-                           })];
+                           L.elems];
+
+//
+
+export const Item = {
+  cost: R.compose(R.prop(R.__, Cost),
+                  L.get('quality'))
+};
 
 //
 
@@ -34,7 +35,8 @@ export const Generic = {
   dataFor: U.view('data'),
   nameFor: U.view('name'),
   qualityFor: U.view('quality'),
-  itemsFor: U.view('items')
+  itemsFor: U.view('items'),
+  costFor: U.view('cost')
 };
 
 //
@@ -52,6 +54,14 @@ export const Entry = {
   allItems: U.lift1(L.collect(charItemsT)),
   itemCount: U.lift1(L.count(L.elems)),
   completedItemCount: U.lift1(L.countIf(isCompleted, L.elems)),
+
+  totalPrice: U.lift1(L.sum([L.elems, 'data', L.elems, 'cost'])),
+  incompletedPrice: U.lift1(L.sum([L.elems, 'data', L.elems, L.when(x => x.completed), 'cost'])),
+
+  totalCost: items =>
+    U.seq([Entry.totalPrice, Entry.incompletedPrice],
+          U.map(R.apply(R.__, R.of(items))),
+          U.apply(U.subtract)),
 
   // @todo Fixme into something pretty
   costForQuality: U.pipe(U.lift1(L.get('quality')),
