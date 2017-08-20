@@ -26,7 +26,11 @@ const CharacterPage = ({ state, match }) => {
   const chars = G.dataFor(state);
   const char = Char.forName(name, chars);
 
-  const items = G.itemsFor(char);
+  const items = G.itemsFor(char).log();
+
+  const d = E.flatListItems(items);
+  const dx = E.itemCount(d).log();
+  const dy = E.completedItemCount(d).log();
 
   return (
     <div className="px-1">
@@ -36,8 +40,16 @@ const CharacterPage = ({ state, match }) => {
 
       {E.totalCost(items)}
 
-      <CompletionStatus {...{ progress: [0, 10] }} />
-      <CompletionProgressBar {...{ progress: [0, 10] }} />
+      <CompletionStatus {...{ progress: [E.completedItemCount(d), E.itemCount(d)] }} />
+      <CompletionProgressBar {...{ progress: [E.completedItemCount(d), E.itemCount(d)] }} />
+
+      <button className="btn btn-lg btn-secondary"
+              onClick={e => {
+                e.preventDefault();
+                Char.completeAllFor(char);
+              }}>
+        Mark all completed
+      </button>
 
       <div className="container-fluid">
         <div className="row">
@@ -48,7 +60,7 @@ const CharacterPage = ({ state, match }) => {
               const id = G.idFor(group);
 
               return (
-                <div className="col-md-3 px-1" key={i}>
+                <div key={i} className="col-md-4 px-1">
                   <div className="card mx-0 px-0">
                     <EntryGroupHeader id={id} group={group} />
                     <EntryList items={G.dataFor(group)} />

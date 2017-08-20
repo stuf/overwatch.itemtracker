@@ -32,7 +32,10 @@ const dataTransformL = [L.elems,
 const dataModified = L.transform(dataTransformL, characterData);
 
 const state = State.createStore({ data: dataModified });
-const context = State.createContext({ state });
+const filter = State.createStore();
+const context = State.createContext({ state, filter });
+
+state.log('state');
 
 //
 

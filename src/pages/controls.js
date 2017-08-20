@@ -1,5 +1,5 @@
 import * as React from 'karet';
-import * as U from 'karet.util';
+import K, * as U from 'karet.util';
 import * as R from 'ramda';
 import {
   NavLink as Link
@@ -11,7 +11,7 @@ import {
   Entry as E
 } from './meta';
 
-import { Strings } from '../constants';
+import { Quality, Strings, Color } from '../constants';
 
 // Completion tracking
 
@@ -19,7 +19,17 @@ const getCompletionStatus = items =>
   U.seq([E.completedItemCount, E.itemCount],
         U.map(R.apply(R.__, R.of(items))));
 
-export const CompletionProgressBar = ({ progress, pct = '30%' }) =>
+const getProgress =
+  U.pipe(U.unless(R.is(Array), R.of),
+         U.apply(R.divide),
+         U.multiply(100));
+
+export const CompletionProgressBar = ({
+  progress,
+  status = U.seq(progress,
+                 getProgress).log('status'),
+  pct = '30%'
+}) =>
   <div className="progress my-2">
     <div className="progress-bar"
          style={{ width: pct }}>
@@ -30,7 +40,6 @@ export const CompletionProgressBar = ({ progress, pct = '30%' }) =>
 export const CompletionStatus = ({ progress }) =>
   <div>
     {U.seq(progress,
-           U.lift(U.show),
            U.unless(R.is(Array), R.of),
            U.join(Strings.COMPLETION_SEPARATOR))}
   </div>;
@@ -46,6 +55,16 @@ export const NavBar = ({ state }) =>
               to={U.string`/character/${U.view('id', c)}`}>
           {U.view('name', c)}
         </Link>))}
+  </div>;
+
+// Filter
+
+export const Filter = ({ state, filter = U.view('filter', state) }) =>
+  <div className="mt-3 text-center">
+    Filter
+
+    <div>
+    </div>
   </div>;
 
 // Item group specific
@@ -68,12 +87,23 @@ const toggleState = atom => e => {
 };
 
 export const Entry = ({ completed, item }) => {
+  const quality = G.qualityFor(item);
+  const color =
+    K(quality, Color, (q, c) => R.propOr(Color.NONE, q, c));
+
+  const itemClassName =
+    U.ifte(completed,
+           U.string`item-quality-${G.qualityFor(item)}`);
+
   return (
-    <li className={U.cns('list-group-item', U.ift(completed, 'active'))}
-        onClick={toggleState(completed)}>
+    <li onClick={toggleState(completed)}
+        className={U.cns('list-group-item',
+                         'item-quality-bg',
+                         U.ift(completed, 'active'),
+                         U.string`item-quality-${G.qualityFor(item)}`)}>
       {G.nameFor(item)}
 
-      <span className="badge badge-primary py-2">
+      <span className="badge badge-primary badge-pill ml-2">
         {G.costFor(item)}
       </span>
     </li>

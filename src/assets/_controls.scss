@@ -1,0 +1,54 @@
+$active-border-darken: 20%;
+
+.item-quality {
+  &-none {
+    color: $quality-fg-none;
+
+    &.active {
+      background: $quality-fg-none;
+      border-color: darken($quality-fg-none, $active-border-darken);
+    }
+  }
+
+  &-common {
+    color: $quality-fg-common;
+
+    &.active {
+      background: $quality-fg-common;
+      border-color: darken($quality-fg-common, $active-border-darken)
+    }
+  }
+
+  &-rare {
+    color: $quality-fg-rare;
+
+    &.active {
+      background: $quality-fg-rare;
+      border-color: darken($quality-fg-rare, $active-border-darken);
+    }
+  }
+
+  &-epic {
+    color: $quality-fg-epic;
+
+    &.active {
+      background: $quality-fg-epic;
+      border-color: darken($quality-fg-epic, $active-border-darken)
+    }
+  }
+
+  &-legendary {
+    color: $quality-fg-legendary;
+
+    &.active {
+      background: $quality-fg-legendary;
+      border-color: darken($quality-fg-legendary, $active-border-darken);
+    }
+  }
+
+  &-bg {
+    &.active {
+      color: rgba(255, 255, 255, 0.87);
+    }
+  }
+}

@@ -3,38 +3,39 @@ import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
 import {
-  Cost, Quality
+  Cost, Quality, Color
 } from '../constants';
 
 //
+export const findByName = id => L.find(R.whereEq({ id }));
 
-export const isCompleted = L.isDefined('completed');
+// export const isCompleted = L.isDefined('completed');
+export const isCompleted = L.isDefined(['completed', L.when(R.identity)]);
 
-export const charItemsT = ['items',
-                           L.elems,
-                           'data',
-                           L.elems];
+export const charItemsT = ['items', L.elems, 'data', L.elems];
 
 //
 
 export const Item = {
+  qualityColor: 0,
   cost: R.compose(R.prop(R.__, Cost),
                   L.get('quality'))
 };
 
-//
+// Character-specific
 
 export const Character = {
-  forName: (name, data) => U.view(L.find(R.whereEq({ id: name })), data)
+  forName: (name, atom) => U.view(findByName(name), atom),
+  completeAllFor: atom => atom.modify(L.set([charItemsT, 'completed'], true))
 };
 
-//
+// Generic viewers
 
 export const Generic = {
   idFor: U.view('id'),
   dataFor: U.view('data'),
   nameFor: U.view('name'),
-  qualityFor: U.view('quality'),
+  qualityFor: U.view(['quality', L.valueOr(Quality.NONE)]),
   itemsFor: U.view('items'),
   costFor: U.view('cost'),
   eventFor: U.view('event'),
@@ -58,7 +59,7 @@ export const EntryList = {
 //
 
 export const Entry = {
-  allItems: U.lift1(L.collect(charItemsT)),
+  flatListItems: U.lift1(L.collect([L.elems, 'data', L.elems])),
   itemCount: U.lift1(L.count(L.elems)),
   completedItemCount: U.lift1(L.countIf(isCompleted, L.elems)),
 
@@ -73,6 +74,9 @@ export const Entry = {
   // @todo Fixme into something pretty
   costForQuality: U.pipe(U.lift1(L.get('quality')),
                          U.lift1(R.prop(R.__, Cost))),
+
+  colorForQuality: U.pipe(U.lift1(L.get('quality'),
+                          U.lift1(R.prop(R.__, Color)))),
 
   getCompletionStatus: items =>
     U.seq([Entry.completedItemCount, Entry.itemCount],
