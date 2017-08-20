@@ -13,3 +13,7 @@ export const Cost = Object.freeze({
   [Quality.EPIC]: 250,
   [Quality.LEGENDARY]: 1000
 });
+
+export const Strings = Object.freeze({
+  COMPLETION_SEPARATOR: ' / '
+});

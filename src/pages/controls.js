@@ -11,14 +11,31 @@ import {
   Entry as E
 } from './meta';
 
-//
+import { Strings } from '../constants';
 
-export const CompletionStatus = ({ items }) =>
-  <div>
-    {U.seq([E.completedItemCount, E.itemCount],
-           U.map(R.apply(R.__, R.of(items))),
-           U.join(' / '))}
+// Completion tracking
+
+const getCompletionStatus = items =>
+  U.seq([E.completedItemCount, E.itemCount],
+        U.map(R.apply(R.__, R.of(items))));
+
+export const CompletionProgressBar = ({ progress, pct = '30%' }) =>
+  <div className="progress my-2">
+    <div className="progress-bar"
+         style={{ width: pct }}>
+      {pct}
+    </div>
   </div>;
+
+export const CompletionStatus = ({ progress }) =>
+  <div>
+    {U.seq(progress,
+           U.lift(U.show),
+           U.unless(R.is(Array), R.of),
+           U.join(Strings.COMPLETION_SEPARATOR))}
+  </div>;
+
+// Navigation
 
 export const NavBar = ({ state }) =>
   <div className="mt-3" style={{ textAlign: 'center' }}>
@@ -31,26 +48,19 @@ export const NavBar = ({ state }) =>
         </Link>))}
   </div>;
 
-//
+// Item group specific
 
 export const EntryGroupHeader = ({ id, group }) =>
   <header className="card-header">
     <div className="row">
       <div className="col">{id}</div>
       <div className="col-xs-4 text-right">
-        <CompletionStatus {...{ items: G.dataFor(group),
-                                className: '' }} />
+        <CompletionStatus {...{ items: G.dataFor(group), progress: [0, 10] }} />
       </div>
     </div>
   </header>;
 
-export const EntryGroup = () =>
-  <div className="col-sm-3 px-1">
-    <div className="card mx-0 px-0">
-    </div>
-  </div>;
-
-//
+// Item groups, single items
 
 const toggleState = atom => e => {
   e.preventDefault();
@@ -63,7 +73,7 @@ export const Entry = ({ completed, item }) => {
         onClick={toggleState(completed)}>
       {G.nameFor(item)}
 
-      <span className="badge badge-primary ml-2">
+      <span className="badge badge-primary py-2">
         {G.costFor(item)}
       </span>
     </li>

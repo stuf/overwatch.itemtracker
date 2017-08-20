@@ -5,7 +5,13 @@ import * as L from 'partial.lenses';
 
 import { addPropsFromContext } from '../helpers';
 
-import { EntryList, CompletionStatus, EntryGroupHeader } from './controls';
+import {
+  CompletionStatus,
+  CompletionProgressBar,
+  EntryList,
+  EntryGroupHeader
+} from './controls';
+
 import {
   Character as Char,
   Generic as G,
@@ -23,14 +29,15 @@ const CharacterPage = ({ state, match }) => {
   const items = G.itemsFor(char);
 
   return (
-    <div>
+    <div className="px-1">
       <hr />
 
       <h2>{G.nameFor(char)}</h2>
 
       {E.totalCost(items)}
 
-      <CompletionStatus {...{ items: E.allItems(char) }} />
+      <CompletionStatus {...{ progress: [0, 10] }} />
+      <CompletionProgressBar {...{ progress: [0, 10] }} />
 
       <div className="container-fluid">
         <div className="row">
