@@ -32,7 +32,7 @@ export const CompletionProgressBar = ({
 
 export const CompletionStatus = ({ completed, total }) =>
   <div>
-    C: {completed} / T: {total}
+    {completed} / {total}
   </div>;
 
 // Navigation

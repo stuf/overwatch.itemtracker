@@ -21,7 +21,7 @@ yarn-debug.log*
 yarn-error.log*
 
 src/**/*.css
-src/assets/fonts
+# src/assets/fonts
 
 .idea/
 *.iml
