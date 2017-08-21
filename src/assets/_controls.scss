@@ -1,3 +1,5 @@
+@import 'variables';
+
 $active-border-darken: 20%;
 
 .entry__block {
@@ -7,6 +9,7 @@ $active-border-darken: 20%;
     > li {
       font-family: 'Futura', sans-serif;
       text-transform: uppercase;
+      cursor: pointer;
     }
   }
 }

@@ -24,7 +24,7 @@ const CharacterPage = ({ state, match }) => {
   const chars = G.dataFor(state);
   const char = Char.forName(name, chars);
 
-  const items = G.itemsFor(char).log();
+  const items = G.itemsFor(char);
 
   const allItems = E.allItems(items);
 

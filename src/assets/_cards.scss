@@ -1,0 +1,16 @@
+$nav-card-container-spacing-x: 7.5rem;
+$nav-card-space: 0.5rem;
+
+.cards {
+  &--characters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: solid 1px #f00;
+    padding: $nav-card-space $nav-card-container-spacing-x;
+  }
+
+  &__card {
+    margin: 0 ($nav-card-space / 2) $nav-card-space;
+  }
+}

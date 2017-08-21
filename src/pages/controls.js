@@ -39,14 +39,16 @@ export const CompletionStatus = ({ completed, total }) =>
 
 export const NavBar = ({ state, data = U.view('data', state) }) =>
   <nav className="top-navigation sticky-top text-center">
-    {U.seq(data,
-           U.indices,
-           U.mapCached(i =>
-             <KefirLink karet-lift
-                   className="btn btn-secondary ml-1"
-                   to={U.string`/character/${U.view([i, 'id'], data)}`}>
-               {U.view([i, 'name'], data)}
-             </KefirLink>))}
+    <div className="cards cards--characters">
+      {U.seq(data,
+             U.indices,
+             U.mapCached(i =>
+               <KefirLink karet-lift
+                          className="btn btn-secondary cards__card"
+                          to={U.string`/character/${U.view([i, 'id'], data)}`}>
+                 {U.view([i, 'name'], data)}
+               </KefirLink>))}
+    </div>
   </nav>;
 
 // Filter
@@ -63,8 +65,8 @@ export const EntryGroupHeader = ({
   id,
   group,
   allItems = U.view('data', group),
-  completedCount: completed = E.completedItemCount(allItems).log(),
-  totalCount: total = E.itemCount(allItems).log()
+  completedCount: completed = E.completedItemCount(allItems),
+  totalCount: total = E.itemCount(allItems)
 }) =>
   <header className={U.cns('card-header')}>
     <div className="row">
