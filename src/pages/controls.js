@@ -1,5 +1,5 @@
 import * as React from 'karet';
-import K, * as U from 'karet.util';
+import * as U from 'karet.util';
 import * as R from 'ramda';
 import {
   NavLink as Link
@@ -11,70 +11,66 @@ import {
   Entry as E
 } from './meta';
 
-import { Quality, Strings, Color } from '../constants';
+const KefirLink = React.fromClass(Link);
 
 // Completion tracking
 
-const getCompletionStatus = items =>
-  U.seq([E.completedItemCount, E.itemCount],
-        U.map(R.apply(R.__, R.of(items))));
-
-const getProgress =
-  U.pipe(U.unless(R.is(Array), R.of),
-         U.apply(R.divide),
-         U.multiply(100));
-
 export const CompletionProgressBar = ({
   progress,
-  status = U.seq(progress,
-                 getProgress).log('status'),
-  pct = '30%'
+  text,
+  value = U.seq(progress,
+                U.multiply(100),
+                U.lift1(x => parseInt(x, 10)),
+                U.lift1(x => `${x}%`))
 }) =>
-  <div className="progress my-2">
+  <div className="progress my-2" style={{ height: '2rem' }}>
     <div className="progress-bar"
-         style={{ width: pct }}>
-      {pct}
+         style={{ width: value, height: '2rem', fontSize: '1.5rem' }}>
+      {text} unlocks
     </div>
   </div>;
 
-export const CompletionStatus = ({ progress }) =>
+export const CompletionStatus = ({ completed, total }) =>
   <div>
-    {U.seq(progress,
-           U.unless(R.is(Array), R.of),
-           U.join(Strings.COMPLETION_SEPARATOR))}
+    C: {completed} / T: {total}
   </div>;
 
 // Navigation
 
-export const NavBar = ({ state }) =>
-  <div className="mt-3" style={{ textAlign: 'center' }}>
-    {U.seq(U.view('data', state),
-      U.mapElems((c, i) =>
-        <Link karet-lift
-              className="btn btn-secondary"
-              to={U.string`/character/${U.view('id', c)}`}>
-          {U.view('name', c)}
-        </Link>))}
-  </div>;
+export const NavBar = ({ state, data = U.view('data', state) }) =>
+  <nav className="top-navigation sticky-top text-center">
+    {U.seq(data,
+           U.indices,
+           U.mapCached(i =>
+             <KefirLink karet-lift
+                   className="btn btn-secondary ml-1"
+                   to={U.string`/character/${U.view([i, 'id'], data)}`}>
+               {U.view([i, 'name'], data)}
+             </KefirLink>))}
+  </nav>;
 
 // Filter
 
 export const Filter = ({ state, filter = U.view('filter', state) }) =>
   <div className="mt-3 text-center">
-    Filter
-
     <div>
     </div>
   </div>;
 
 // Item group specific
 
-export const EntryGroupHeader = ({ id, group }) =>
-  <header className="card-header">
+export const EntryGroupHeader = ({
+  id,
+  group,
+  allItems = U.view('data', group),
+  completedCount: completed = E.completedItemCount(allItems).log(),
+  totalCount: total = E.itemCount(allItems).log()
+}) =>
+  <header className={U.cns('card-header')}>
     <div className="row">
       <div className="col">{id}</div>
       <div className="col-xs-4 text-right">
-        <CompletionStatus {...{ items: G.dataFor(group), progress: [0, 10] }} />
+        <CompletionStatus {...{ completed, total }} />
       </div>
     </div>
   </header>;
@@ -86,34 +82,26 @@ const toggleState = atom => e => {
   atom.modify(R.not);
 };
 
-export const Entry = ({ completed, item }) => {
-  const quality = G.qualityFor(item);
-  const color =
-    K(quality, Color, (q, c) => R.propOr(Color.NONE, q, c));
+// Single group item
 
-  const itemClassName =
-    U.ifte(completed,
-           U.string`item-quality-${G.qualityFor(item)}`);
+export const Entry = ({ completed, item }) =>
+  <li onClick={toggleState(completed)}
+      className={U.cns('list-group-item',
+                       'entry__list__item',
+                       'item-quality-bg',
+                       U.ift(completed, 'active'),
+                       U.string`item-quality-${G.qualityFor(item)}`)}>
+    {G.nameFor(item)}
 
-  return (
-    <li onClick={toggleState(completed)}
-        className={U.cns('list-group-item',
-                         'item-quality-bg',
-                         U.ift(completed, 'active'),
-                         U.string`item-quality-${G.qualityFor(item)}`)}>
-      {G.nameFor(item)}
-
-      <span className="badge badge-primary badge-pill ml-2">
-        {G.costFor(item)}
-      </span>
-    </li>
-  );
-};
+    <span className="badge badge-primary badge-pill ml-2">
+      {G.costFor(item)}
+    </span>
+  </li>;
 
 //
 
 export const EntryList = ({ items }) =>
-  <ul className={U.cns('list-group')}>
+  <ul className={U.cns('list-group', 'entry__list')}>
     {U.seq(items,
            U.indices,
            U.mapCached(i =>

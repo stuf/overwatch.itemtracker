@@ -1,4 +1,4 @@
-import * as U from 'karet.util';
+import K, * as U from 'karet.util';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
@@ -35,6 +35,7 @@ export const Generic = {
   idFor: U.view('id'),
   dataFor: U.view('data'),
   nameFor: U.view('name'),
+  classFor: U.view('class'),
   qualityFor: U.view(['quality', L.valueOr(Quality.NONE)]),
   itemsFor: U.view('items'),
   costFor: U.view('cost'),
@@ -58,25 +59,37 @@ export const EntryList = {
 
 //
 
+// Traversals
+const allItemsCostT = [L.elems, 'cost'];
+const completedItemsCostT = [L.elems, L.when(R.prop('completed')), 'cost'];
+
+const allCharItems = [L.elems, 'data', L.elems];
+const totalPrice = U.lift1Shallow(L.sum([allCharItems, 'cost']));
+const incompletedPrice = U.lift1(L.sumAs(R.identity, [...allCharItems, 'cost']));
+
+const allItems = U.lift1(L.collect(allCharItems));
+const itemCount = U.lift1(L.count(L.elems));
+const completedItemCount = U.lift1(L.countIf(isCompleted, L.elems));
+
+const totalCost = items =>
+  K(items, allItemsCostT, completedItemsCostT, (xs, allT, doneT) =>
+    R.subtract(L.sum(allT, xs), L.sum(doneT, xs)));
+
+const getWithQuality = obj =>
+  U.lift1(R.pipe(L.get('quality'),
+                 R.prop(R.__, obj)));
+
 export const Entry = {
-  flatListItems: U.lift1(L.collect([L.elems, 'data', L.elems])),
-  itemCount: U.lift1(L.count(L.elems)),
-  completedItemCount: U.lift1(L.countIf(isCompleted, L.elems)),
+  allItems,
+  itemCount,
+  completedItemCount,
 
-  totalPrice: U.lift1(L.sum([L.elems, 'data', L.elems, 'cost'])),
-  incompletedPrice: U.lift1(L.sum([L.elems, 'data', L.elems, L.when(x => x.completed), 'cost'])),
+  totalPrice,
+  incompletedPrice,
+  totalCost,
 
-  totalCost: items =>
-    U.seq([Entry.totalPrice, Entry.incompletedPrice],
-          U.map(R.apply(R.__, R.of(items))),
-          U.apply(U.subtract)),
-
-  // @todo Fixme into something pretty
-  costForQuality: U.pipe(U.lift1(L.get('quality')),
-                         U.lift1(R.prop(R.__, Cost))),
-
-  colorForQuality: U.pipe(U.lift1(L.get('quality'),
-                          U.lift1(R.prop(R.__, Color)))),
+  costForQuality: getWithQuality(Cost),
+  colorForQuality: getWithQuality(Color),
 
   getCompletionStatus: items =>
     U.seq([Entry.completedItemCount, Entry.itemCount],

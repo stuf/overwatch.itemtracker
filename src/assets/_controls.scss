@@ -1,48 +1,63 @@
 $active-border-darken: 20%;
 
+.entry__block {
+  header {}
+
+  .entry__list {
+    > li {
+      font-family: 'Futura', sans-serif;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.color-cost {
+  color: #00db55;
+}
+
 .item-quality {
   &-none {
-    color: $quality-fg-none;
+    color: $color-quality-fg-none;
 
     &.active {
-      background: $quality-fg-none;
-      border-color: darken($quality-fg-none, $active-border-darken);
+      background: $color-quality-fg-none;
+      border-color: darken($color-quality-fg-none, $active-border-darken);
     }
   }
 
   &-common {
-    color: $quality-fg-common;
+    color: $color-quality-fg-common;
 
     &.active {
-      background: $quality-fg-common;
-      border-color: darken($quality-fg-common, $active-border-darken)
+      background: $color-quality-fg-common;
+      border-color: darken($color-quality-fg-common, $active-border-darken)
     }
   }
 
   &-rare {
-    color: $quality-fg-rare;
+    color: $color-quality-fg-rare;
 
     &.active {
-      background: $quality-fg-rare;
-      border-color: darken($quality-fg-rare, $active-border-darken);
+      background: $color-quality-fg-rare;
+      border-color: darken($color-quality-fg-rare, $active-border-darken);
     }
   }
 
   &-epic {
-    color: $quality-fg-epic;
+    color: $color-quality-fg-epic;
 
     &.active {
-      background: $quality-fg-epic;
-      border-color: darken($quality-fg-epic, $active-border-darken)
+      background: $color-quality-fg-epic;
+      border-color: darken($color-quality-fg-epic, $active-border-darken)
     }
   }
 
   &-legendary {
-    color: $quality-fg-legendary;
+    color: $color-quality-fg-legendary;
 
     &.active {
-      background: $quality-fg-legendary;
-      border-color: darken($quality-fg-legendary, $active-border-darken);
+      background: $color-quality-fg-legendary;
+      border-color: darken($color-quality-fg-legendary, $active-border-darken);
     }
   }
 

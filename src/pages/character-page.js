@@ -1,7 +1,5 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
-import * as R from 'ramda';
-import * as L from 'partial.lenses';
 
 import { addPropsFromContext } from '../helpers';
 
@@ -28,20 +26,29 @@ const CharacterPage = ({ state, match }) => {
 
   const items = G.itemsFor(char).log();
 
-  const d = E.flatListItems(items);
-  const dx = E.itemCount(d).log();
-  const dy = E.completedItemCount(d).log();
+  const allItems = E.allItems(items);
+
+  const progressStatus =
+    [E.completedItemCount(allItems),
+     E.itemCount(allItems)];
+
+  const progressPct = U.apply(U.divide, progressStatus);
 
   return (
     <div className="px-1">
-      <hr />
+      <aside>
+        {E.totalCost(allItems)}
+      </aside>
 
-      <h2>{G.nameFor(char)}</h2>
+      <header>
+        <h2 className="display-2">{G.nameFor(char)}</h2>
+        <h3>{G.classFor(char)}</h3>
+      </header>
 
-      {E.totalCost(items)}
-
-      <CompletionStatus {...{ progress: [E.completedItemCount(d), E.itemCount(d)] }} />
-      <CompletionProgressBar {...{ progress: [E.completedItemCount(d), E.itemCount(d)] }} />
+      <CompletionStatus {...{ completed: U.view(0, progressStatus),
+                              total: U.view(1, progressStatus) }} />
+      <CompletionProgressBar {...{ progress: progressPct,
+                                   text: U.join(' / ', progressStatus) }} />
 
       <button className="btn btn-lg btn-secondary"
               onClick={e => {
@@ -60,7 +67,7 @@ const CharacterPage = ({ state, match }) => {
               const id = G.idFor(group);
 
               return (
-                <div key={i} className="col-md-4 px-1">
+                <div key={i} className="col-md-4 px-1 entry__block">
                   <div className="card mx-0 px-0">
                     <EntryGroupHeader id={id} group={group} />
                     <EntryList items={G.dataFor(group)} />

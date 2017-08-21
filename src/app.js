@@ -7,9 +7,6 @@ import * as State from './state';
 import IndexPage from './pages';
 import itemData from './data/items.json';
 import { Cost } from './constants';
-import {
-  Item as I
-} from './pages/meta';
 
 //
 

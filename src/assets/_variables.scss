@@ -1,5 +1,22 @@
-$quality-fg-none: rgba(170, 170, 170, 0.87);
-$quality-fg-common: rgba(120, 120, 120, 0.87);
-$quality-fg-rare: #12b9f5;
-$quality-fg-epic: #ed3cef;
-$quality-fg-legendary: #fcb01c;
+// Typography
+
+$font-family-sans-serif: 'Big Noodle Titling';
+
+// Colors
+
+$color-cost-fg: rgb(0, 219, 85);
+
+// Quality colors
+
+$color-quality-fg-none: rgb(170, 170, 170);
+$color-quality-fg-common: rgb(120, 120, 120);
+$color-quality-fg-rare: rgb(18, 185, 245);
+$color-quality-fg-epic: rgb(237, 60, 239);
+$color-quality-fg-legendary: rgb(252, 176, 28);
+
+// Overwatch colors
+
+$color-overwatch-orange: rgb(249, 158, 26);
+$color-overwatch-dark-gray: rgb(67, 72, 76);
+$color-overwatch-dark-navy: rgb(64, 82, 117);
+$color-overwatch-blue: rgb(33, 143, 254);
