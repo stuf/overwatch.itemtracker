@@ -4,6 +4,7 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 
+import currency from '../assets/images/currency.svg';
 import { addPropsFromContext, number } from '../helpers';
 import {
   Generic as G,
@@ -54,23 +55,36 @@ const HomePage = ({ state }) => {
             </div>
           </div>
 
-          <div className="row justify-content-end progress--total-costs mt-4">
-            <div className="col-sm-2">
+          <div className="row justify-content-end align-items-center progress--total-costs mt-4">
+            <div className="col-auto">
               <dl>
                 <dt>Total</dt>
-                <dd>{I.itemCost(allItems)}</dd>
+                <dd>
+                  {I.itemCost(allItems)}
+                  <img src={currency} className="currency" />
+                </dd>
               </dl>
             </div>
-            <div className="col-sm-2">
+            <div className="col-auto progress--symbol">
+              -
+            </div>
+            <div className="col-auto">
               <dl>
                 <dt>Completed</dt>
-                <dd>{I.completedItemCost(allItems)}</dd>
+                <dd>
+                  {I.completedItemCost(allItems)}
+                  <img src={currency} className="currency" />
+                </dd>
               </dl>
             </div>
-            <div className="col-sm-2">
+            <div className="col-auto progress--symbol">=</div>
+            <div className="col-auto">
               <dl>
                 <dt>Left</dt>
-                <dd>{costsLeft}</dd>
+                <dd>
+                  {costsLeft}
+                  <img src={currency} className="currency" />
+                </dd>
               </dl>
             </div>
           </div>

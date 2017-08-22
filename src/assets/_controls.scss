@@ -2,6 +2,20 @@
 
 $active-border-darken: 20%;
 
+$button-font-family: 'Futura', sans-serif;
+
+// Btn
+
+.btn {
+  font-family: $button-font-family;
+}
+
+.btn-card {
+
+}
+
+//
+
 .entry__block {
   header {}
 

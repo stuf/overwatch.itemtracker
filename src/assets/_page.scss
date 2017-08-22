@@ -24,14 +24,15 @@ section.page--character {
     }
 
     .item-group__list-item {
+      text-shadow:
+        $cost-text-shadow-offset-x
+        $cost-text-shadow-offset-y
+        $cost-text-shadow-blur
+        $cost-text-shadow-color;
+
       &__cost {
         color: $color-cost-fg;
         margin-left: 0.5rem;
-        text-shadow:
-          $cost-text-shadow-offset-x
-          $cost-text-shadow-offset-y
-          $cost-text-shadow-blur
-          $cost-text-shadow-color;
       }
     }
   }
@@ -57,8 +58,19 @@ section.page--home {
   }
 
   .progress--total-costs {
+    .progress--symbol {
+      font-size: $font-size-base * 3;
+    }
+
     dd {
       font-size: $font-size-base * 3;
+
+      .currency {
+        display: inline-block;
+        margin-left: 0.5rem;
+        width: 2rem;
+        height: 2rem;
+      }
     }
   }
 }

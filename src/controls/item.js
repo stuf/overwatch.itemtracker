@@ -59,27 +59,32 @@ export const ItemGroupList = ({ items }) =>
  */
 export const ItemGroup = ({ items, name }) =>
   <section className="item-groups">
-    {U.seq(items,
-           U.indices,
-           U.mapCached(i => {
-             const group = U.view(i, items);
-             const id = G.idFor(group);
-             const data = G.dataFor(group);
+    <div className="row">
+      {U.seq(items,
+             U.indices,
+             U.mapCached(i => {
+               const group = U.view(i, items);
+               const id = G.idFor(group);
+               const data = G.dataFor(group);
 
-             return (
-               <article key={i} className="item-group mt-2">
-                 <header className="row item-group__header">
-                   <h3 className="col item-group__name">
-                     {id}
-                     <span className="col-3 text-right item-group__status">
-                       {I.totalCompletedItemCount(data)} / {I.totalItemCount(data)}
-                     </span>
-                   </h3>
-                 </header>
+               return (
+                 <article key={i} className="item-group col-6 mt-2">
+                   <header className="row item-group__header">
+                     <h3 className="col item-group__name">
+                       {id}
+                       <span className="col-3 text-right item-group__status">
+                         {U.seq([I.totalCompletedItemCount, I.totalItemCount],
+                                U.map(x => x(data)),
+                                U.lift(U.show))}
+                         {I.totalCompletedItemCount(data)} / {I.totalItemCount(data)}
+                       </span>
+                     </h3>
+                   </header>
 
-                 <ItemGroupList items={data} />
-               </article>
-             )
-           }))};
+                   <ItemGroupList items={data} />
+                 </article>
+               )
+             }))}
+    </div>
   </section>;
 

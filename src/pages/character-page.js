@@ -44,27 +44,29 @@ const CharacterPage = ({ state, match }) => {
 
   return (
     <section className="page page--character">
-      <aside>
-        {E.totalCost(allItems)}
-      </aside>
+      <div className="container">
+        <aside>
+          {E.totalCost(allItems)}
+        </aside>
 
-      <header>
-        {/*<h2 className="display-2">{G.nameFor(char)}</h2>*/}
-        <h3>{G.classFor(char)}</h3>
-      </header>
+        <header>
+          <h2 className="display-2">{G.nameFor(char)}</h2>
+          <h3>{G.classFor(char)}</h3>
+        </header>
 
-      <CompletionProgress {...{ progress }} />
-      <CompletionStatus {...status} />
+        <CompletionProgress {...{ progress }} />
+        <CompletionStatus {...status} />
 
-      <button className="btn btn-lg btn-secondary"
-              onClick={e => {
-                e.preventDefault();
-                C.completeAllFor(char);
-              }}>
-        Mark all completed
-      </button>
+        <button className="btn btn-lg btn-secondary"
+                onClick={e => {
+                  e.preventDefault();
+                  C.completeAllFor(char);
+                }}>
+          Mark all completed
+        </button>
 
-      <ItemGroup {...{ items }} />
+        <ItemGroup {...{ items }} />
+      </div>
     </section>
   )
 };
