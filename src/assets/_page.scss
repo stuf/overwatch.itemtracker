@@ -2,6 +2,42 @@
 
 section.page {}
 
+section.page--character {
+  $cost-text-shadow-color: rgba(0, 0, 0, 0.7);
+  $cost-text-shadow-blur: 0;
+  $cost-text-shadow-offset: (1rem / 16);
+  $cost-text-shadow-offset-x: $cost-text-shadow-offset;
+  $cost-text-shadow-offset-y: $cost-text-shadow-offset;
+
+  section.item-groups {
+    border: solid 2px #f00;
+
+    > article {
+      border: solid 1px #f00 !important;
+    }
+
+    .item-group__header {}
+    .item-group__list {
+      font-family: 'Futura', sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .item-group__list-item {
+
+      &__cost {
+        color: $color-cost-fg;
+        margin-left: 0.5rem;
+        text-shadow:
+          $cost-text-shadow-offset-x
+          $cost-text-shadow-offset-y
+          $cost-text-shadow-blur
+          $cost-text-shadow-color;
+      }
+    }
+  }
+}
+
 section.page--home {
   header {
     .progress {

@@ -1,3 +1,6 @@
+/**
+ * @module Controls.Navigation
+ */
 import React, { fromClass } from 'karet';
 import * as U from 'karet.util';
 import { NavLink as Link } from 'react-router-dom';
@@ -12,6 +15,12 @@ const KefirLink = fromClass(Link);
 
 //
 
+/**
+ * @class Roster
+ * @param characters
+ * @param itemClassName
+ * @constructor
+ */
 export const Roster = ({ characters, itemClassName = 'btn btn-secondary cards__card' }) =>
   <div className="roster cards cards--characters">
     {U.seq(characters,
@@ -26,6 +35,14 @@ export const Roster = ({ characters, itemClassName = 'btn btn-secondary cards__c
 
 //
 
+/**
+ * @class NavBar
+ * @param state
+ * @param isVisible
+ * @param data
+ * @param hasCharacters
+ * @constructor
+ */
 export const NavBar = ({
   state,
   isVisible = Nav.isNavigationVisibleFor(state),

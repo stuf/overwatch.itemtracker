@@ -1,3 +1,6 @@
+/**
+ * @module Pages.HomePage
+ */
 import * as React from 'karet';
 import * as U from 'karet.util';
 
@@ -9,6 +12,12 @@ import {
 
 //
 
+/**
+ * @class HomePage
+ * @param state
+ * @returns {XML}
+ * @constructor
+ */
 const HomePage = ({ state }) => {
   const chars = G.dataFor(state);
 

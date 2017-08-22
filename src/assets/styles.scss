@@ -1,7 +1,13 @@
+// First, define our own vars
 @import 'variables';
+@import 'typography';
+
+// Import Bootstrap
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+// Then, import everything that depends on predefined variables
 @import 'cards';
 @import 'character';
 @import 'controls';
 @import 'navigation';
-@import 'typography';
 @import 'page';

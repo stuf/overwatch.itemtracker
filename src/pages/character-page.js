@@ -1,3 +1,6 @@
+/**
+ * @module Pages.CharacterPage
+ */
 import * as React from 'karet';
 import * as U from 'karet.util';
 
@@ -18,6 +21,13 @@ import {
 
 //
 
+/**
+ * @class CharacterPage
+ * @param state
+ * @param match
+ * @returns {XML}
+ * @constructor
+ */
 const CharacterPage = ({ state, match }) => {
   const { name } = match.params;
 
@@ -33,7 +43,7 @@ const CharacterPage = ({ state, match }) => {
   const progress = U.apply(U.divide, U.values(status));
 
   return (
-    <div className="px-1">
+    <section className="page page--character">
       <aside>
         {E.totalCost(allItems)}
       </aside>
@@ -54,12 +64,8 @@ const CharacterPage = ({ state, match }) => {
         Mark all completed
       </button>
 
-      <div className="container-fluid">
-        <div className="row">
-          <ItemGroup {...{ items }} />
-        </div>
-      </div>
-    </div>
+      <ItemGroup {...{ items }} />
+    </section>
   )
 };
 
