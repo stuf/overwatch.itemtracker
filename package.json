@@ -24,10 +24,13 @@
     "npm-run-all": "^4.0.2",
     "react-scripts": "1.0.11",
     "react-test-renderer": "^15.6.1",
-    "sinon": "^3.2.0"
+    "sinon": "^3.2.0",
+    "yuidocjs": "^0.10.2"
   },
   "scripts": {
+    "build-docs": "yuidoc ./src",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-docs": "yuidoc --server 5000 ./src",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",

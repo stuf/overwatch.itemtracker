@@ -1,0 +1,9 @@
+{
+  "name": "overwatch.itemtracker",
+  "url": "https://stuf.github.io/overwatch.itemtracker",
+  "options": {
+    "linkNatives": true,
+    "outdir": "./docs",
+    "paths": "*.js"
+  }
+}
