@@ -73,9 +73,6 @@ export const ItemGroup = ({ items, name }) =>
                      <h3 className="col item-group__name">
                        {id}
                        <span className="col-3 text-right item-group__status">
-                         {U.seq([I.totalCompletedItemCount, I.totalItemCount],
-                                U.map(x => x(data)),
-                                U.lift(U.show))}
                          {I.totalCompletedItemCount(data)} / {I.totalItemCount(data)}
                        </span>
                      </h3>
