@@ -3,17 +3,17 @@ import * as U from 'karet.util';
 
 import { addPropsFromContext } from '../helpers';
 
+import { ItemGroup } from '../controls/item';
 import {
-  CompletionStatus,
-  CompletionProgressBar,
-  EntryList,
-  EntryGroupHeader
-} from './controls';
+  CompletionProgress,
+  CompletionStatus
+} from '../controls/progress';
 
 import {
-  Character as Char,
+  Character as C,
   Generic as G,
-  Entry as E
+  Entry as E,
+  Items as I
 } from './meta';
 
 //
@@ -21,18 +21,16 @@ import {
 const CharacterPage = ({ state, match }) => {
   const { name } = match.params;
 
-  const chars = G.dataFor(state);
-  const char = Char.forName(name, chars);
-
+  const char = C.forName(name, G.dataFor(state));
   const items = G.itemsFor(char);
+  const allItems = I.collectCharacterItems(char);
 
-  const allItems = E.allItems(items);
+  const status = {
+    completed: E.completedItemCount(allItems),
+    total: E.itemCount(allItems)
+  };
 
-  const progressStatus =
-    [E.completedItemCount(allItems),
-     E.itemCount(allItems)];
-
-  const progressPct = U.apply(U.divide, progressStatus);
+  const progress = U.apply(U.divide, U.values(status));
 
   return (
     <div className="px-1">
@@ -41,40 +39,24 @@ const CharacterPage = ({ state, match }) => {
       </aside>
 
       <header>
-        <h2 className="display-2">{G.nameFor(char)}</h2>
+        {/*<h2 className="display-2">{G.nameFor(char)}</h2>*/}
         <h3>{G.classFor(char)}</h3>
       </header>
 
-      <CompletionStatus {...{ completed: U.view(0, progressStatus),
-                              total: U.view(1, progressStatus) }} />
-      <CompletionProgressBar {...{ progress: progressPct,
-                                   text: U.join(' / ', progressStatus) }} />
+      <CompletionProgress {...{ progress }} />
+      <CompletionStatus {...status} />
 
       <button className="btn btn-lg btn-secondary"
               onClick={e => {
                 e.preventDefault();
-                Char.completeAllFor(char);
+                C.completeAllFor(char);
               }}>
         Mark all completed
       </button>
 
       <div className="container-fluid">
         <div className="row">
-          {U.seq(items,
-            U.indices,
-            U.mapCached(i => {
-              const group = U.view(i, items);
-              const id = G.idFor(group);
-
-              return (
-                <div key={i} className="col-md-4 px-1 entry__block">
-                  <div className="card mx-0 px-0">
-                    <EntryGroupHeader id={id} group={group} />
-                    <EntryList items={G.dataFor(group)} />
-                  </div>
-                </div>
-              )
-          }))}
+          <ItemGroup {...{ items }} />
         </div>
       </div>
     </div>

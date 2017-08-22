@@ -1,0 +1,29 @@
+@import 'variables';
+
+section.page {}
+
+section.page--home {
+  header {
+    .progress {
+      & {
+        background-color: #fff;
+        border: solid (1rem / 16) rgba($color-overwatch-dark-gray, 0.75);
+      }
+
+      &, &-bar {
+        height: 5rem;
+      }
+
+      &-bar {
+        background-color: $color-overwatch-orange;
+        font-size: $font-size-base * 3;
+      }
+    }
+  }
+
+  .progress--total-costs {
+    dd {
+      font-size: $font-size-base * 3;
+    }
+  }
+}

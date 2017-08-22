@@ -6,28 +6,12 @@ import {
   Cost, Quality, Color
 } from '../constants';
 
-//
+import { number } from '../helpers';
+
+// Composable lenses
+
 export const findByName = id => L.find(R.whereEq({ id }));
-
-// export const isCompleted = L.isDefined('completed');
 export const isCompleted = L.isDefined(['completed', L.when(R.identity)]);
-
-export const charItemsT = ['items', L.elems, 'data', L.elems];
-
-//
-
-export const Item = {
-  qualityColor: 0,
-  cost: R.compose(R.prop(R.__, Cost),
-                  L.get('quality'))
-};
-
-// Character-specific
-
-export const Character = {
-  forName: (name, atom) => U.view(findByName(name), atom),
-  completeAllFor: atom => atom.modify(L.set([charItemsT, 'completed'], true))
-};
 
 // Generic viewers
 
@@ -40,12 +24,7 @@ export const Generic = {
   itemsFor: U.view('items'),
   costFor: U.view('cost'),
   eventFor: U.view('event'),
-
-  percentageFor: status =>
-    U.seq(status,
-          U.apply(R.divide),
-          U.multiply(100),
-          U.lift1(x => `${x}%`))
+  percentageFor: U.pipe(U.apply(R.divide), U.lift1(number.showAsPercent))
 };
 
 //
@@ -55,21 +34,49 @@ export const EntryList = {
   dataFor: U.view('data'),
   itemFor: (id, data) => U.view(id, data),
   completedFor: (id, data) => U.view([id, 'completed', L.valueOr(false)], data)
-}
+};
 
 //
 
 // Traversals
+const itemsT = [L.elems];
+const completedItemsT = [itemsT, L.when(R.prop('completed'))];
+const characterItemsT = ['items', L.elems, 'data', L.elems];
+const allCharacterItemsT = [L.elems, characterItemsT];
+
+const itemCostsT = [itemsT, 'cost'];
+const completedItemCostsT = [completedItemsT, 'cost'];
+
 const allItemsCostT = [L.elems, 'cost'];
 const completedItemsCostT = [L.elems, L.when(R.prop('completed')), 'cost'];
 
-const allCharItems = [L.elems, 'data', L.elems];
-const totalPrice = U.lift1Shallow(L.sum([allCharItems, 'cost']));
-const incompletedPrice = U.lift1(L.sumAs(R.identity, [...allCharItems, 'cost']));
+const allCharItemsL = [L.elems, 'data', L.elems];
+const totalPrice = U.lift1Shallow(L.sum([allCharItemsL, 'cost']));
+const incompletedPrice = U.lift1(L.sumAs(R.identity, [...allCharItemsL, 'cost']));
 
-const allItems = U.lift1(L.collect(allCharItems));
+const allCharItems = U.lift1(L.collect(allCharItemsL));
 const itemCount = U.lift1(L.count(L.elems));
 const completedItemCount = U.lift1(L.countIf(isCompleted, L.elems));
+
+//
+
+// Character-specific
+
+export const Character = {
+  forName: (name, atom) => U.view(findByName(name), atom),
+  completeAllFor: atom => atom.modify(L.set([characterItemsT, 'completed'], true))
+};
+
+export const Items = {
+  collectAllItems: U.lift1(L.collect(allCharacterItemsT)),
+  collectCharacterItems: U.lift1(L.collect(characterItemsT)),
+  totalItemCount: U.lift1(L.count(L.elems)),
+  totalCompletedItemCount: U.lift1(L.countIf(isCompleted, L.elems)),
+  itemCost: U.lift1(L.sum(itemCostsT)),
+  completedItemCost: U.lift1(L.sum(completedItemCostsT))
+};
+
+//
 
 const totalCost = items =>
   K(items, allItemsCostT, completedItemsCostT, (xs, allT, doneT) =>
@@ -80,7 +87,7 @@ const getWithQuality = obj =>
                  R.prop(R.__, obj)));
 
 export const Entry = {
-  allItems,
+  allCharItems,
   itemCount,
   completedItemCount,
 
@@ -94,5 +101,17 @@ export const Entry = {
   getCompletionStatus: items =>
     U.seq([Entry.completedItemCount, Entry.itemCount],
           U.map(R.apply(R.__, R.of(items))),
-          U.lift(U.show))
+          U.lift(U.show)),
+
+  optics: {
+    characterItemsT,
+    allCharacterItemsT,
+    itemsT,
+    itemCostsT,
+    allItemsCostT,
+    completedItemsT,
+    completedItemCostsT,
+    completedItemsCostT,
+    allCharItemsL
+  }
 };

@@ -8,7 +8,7 @@ import {
 import { addPropsFromContext } from '../helpers';
 import HomePage from './home-page';
 import CharacterPage from './character-page';
-import { NavBar, Filter } from './controls';
+import { NavBar } from '../controls/navigation';
 
 const IndexPage = ({
   state,
@@ -18,7 +18,6 @@ const IndexPage = ({
   <Router>
     <div>
       <NavBar {...{ state }} />
-      <Filter {...{ filter }} />
 
       <div>
         <Route path="/" component={HomePage} exact />

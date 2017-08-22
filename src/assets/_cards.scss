@@ -12,5 +12,7 @@ $nav-card-space: 0.5rem;
 
   &__card {
     margin: 0 ($nav-card-space / 2) $nav-card-space;
+    width: 7.5rem;
+    height: 8rem;
   }
 }

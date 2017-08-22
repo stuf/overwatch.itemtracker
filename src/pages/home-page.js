@@ -1,32 +1,74 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
+
+import { addPropsFromContext, number } from '../helpers';
 import {
-  Link as RouterLink
-} from 'react-router-dom';
+  Generic as G,
+  Items as I
+} from './meta';
 
-import { addPropsFromContext } from '../helpers';
+//
 
-const Link = React.fromClass(RouterLink);
+const HomePage = ({ state }) => {
+  const chars = G.dataFor(state);
 
-const HomePage = ({ state }) =>
-  <div>
-    Home page
+  const allItems = I.collectAllItems(chars);
+  const itemStats = {
+    completed: I.totalCompletedItemCount(allItems),
+    total: I.totalItemCount(allItems)
+  };
 
-    <div>
-      {U.seq(U.view('data', state),
-             U.indices,
-             U.mapCached(i => {
-               const char = U.view(['data', i], state);
-               const id = U.view('id', char);
-               const name = U.view('name', char);
+  const percentageProgress = U.apply(U.divide, U.values(itemStats));
 
-               return (
-                 <Link to={U.string`/character/${id}`}>
-                   {name}
-                 </Link>
-               )
-             }))}
-    </div>
-  </div>;
+  const costs = {
+    completed: I.completedItemCost(allItems),
+    total: I.itemCost(allItems)
+  };
+
+  const costsLeft =
+    U.seq(U.values(costs),
+          U.reverse,
+          U.apply(U.subtract));
+
+  return (
+    <section className="page page--home">
+      <header className="jumbotron progress--total">
+        <div className="container">
+          <p className="display-3">
+            Total completion status
+          </p>
+
+          <div className="progress">
+            <div className="progress-bar"
+                 style={{ width: number.showAsPercent(percentageProgress) }}>
+              {itemStats.completed} / {itemStats.total}
+            </div>
+          </div>
+
+          <div className="row justify-content-end progress--total-costs mt-4">
+            <div className="col-sm-2">
+              <dl>
+                <dt>Total</dt>
+                <dd>{I.itemCost(allItems)}</dd>
+              </dl>
+            </div>
+            <div className="col-sm-2">
+              <dl>
+                <dt>Completed</dt>
+                <dd>{I.completedItemCost(allItems)}</dd>
+              </dl>
+            </div>
+            <div className="col-sm-2">
+              <dl>
+                <dt>Left</dt>
+                <dd>{costsLeft}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+  );
+};
 
 export default addPropsFromContext(HomePage);

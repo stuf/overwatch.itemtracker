@@ -3,6 +3,6 @@ import { shallow } from 'enzyme';
 
 import HomePage from './home-page';
 
-it('should render HomePage with initial data', () => {
+it('should render a home page with initial data', () => {
   const wrapper = shallow(<HomePage />);
 });

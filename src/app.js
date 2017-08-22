@@ -10,6 +10,8 @@ import { Cost } from './constants';
 
 //
 
+// @fixme Extract data transformation into migration or somesuch
+
 const intoDataPair = ([id, data]) => ({ id, data });
 const transformItems =
   R.compose(R.map(intoDataPair),
@@ -25,14 +27,16 @@ const characterData = L.collect(L.values, itemData);
 const dataTransformL = [L.elems,
                         'items',
                         L.seq(L.modifyOp(transformItems),
-                              L.modifyOp(addItemCosts))]
+                              L.modifyOp(addItemCosts))];
 const dataModified = L.transform(dataTransformL, characterData);
 
 const state = State.createStore({ data: dataModified });
 const filter = State.createStore();
 const context = State.createContext({ state, filter });
 
-state.log('state');
+if (process.env.NODE_ENV === 'development') {
+  state.log('state');
+}
 
 //
 
