@@ -14,6 +14,26 @@ $active-border-darken: 20%;
   }
 }
 
+section.item-groups {}
+
+article.item-group > header {
+  padding: $list-group-item-padding-y $list-group-item-padding-x;
+}
+
+.item-group {
+  &__header {
+    line-height: $font-size-base;
+  }
+
+  &__name {
+    margin-bottom: 0;
+  }
+
+  &__status {
+    font-size: $font-size-base * 1.5;
+  }
+}
+
 .color-cost {
   color: #00db55;
 }

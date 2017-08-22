@@ -10,10 +10,10 @@ section.page--character {
   $cost-text-shadow-offset-y: $cost-text-shadow-offset;
 
   section.item-groups {
-    border: solid 2px #f00;
+    // border: solid 2px #f00;
 
     > article {
-      border: solid 1px #f00 !important;
+      // border: solid 1px #f00 !important;
     }
 
     .item-group__header {}
@@ -24,7 +24,6 @@ section.page--character {
     }
 
     .item-group__list-item {
-
       &__cost {
         color: $color-cost-fg;
         margin-left: 0.5rem;

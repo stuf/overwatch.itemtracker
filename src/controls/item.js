@@ -7,7 +7,9 @@ import * as U from 'karet.util';
 import { toggle } from '../helpers';
 import {
   Generic as G,
-  EntryList as EL
+  Entry as E,
+  EntryList as EL,
+  Items as I
 } from '../pages/meta';
 
 //
@@ -65,10 +67,14 @@ export const ItemGroup = ({ items, name }) =>
              const data = G.dataFor(group);
 
              return (
-               <article key={i} className="item-group">
+               <article key={i} className="item-group mt-2">
                  <header className="row item-group__header">
-                   <h3 className="col">{id}</h3>
-                   <div className="col-3 text-right">0 / 0</div>
+                   <h3 className="col item-group__name">
+                     {id}
+                     <span className="col-3 text-right item-group__status">
+                       {I.totalCompletedItemCount(data)} / {I.totalItemCount(data)}
+                     </span>
+                   </h3>
                  </header>
 
                  <ItemGroupList items={data} />
