@@ -34,3 +34,19 @@ $text-contrast-shadow-offset: (1rem / 16);
 $text-contrast-shadow-offset-x: $text-contrast-shadow-offset;
 $text-contrast-shadow-offset-y: $text-contrast-shadow-offset;
 
+// Controls
+
+$completion-progress-sizes: (
+  sm: (
+    bar-height: 1.25rem,
+    font-size-factor: 0.8
+  ),
+  md: (
+    bar-height: 3rem,
+    font-size-factor: 1.25
+  ),
+  lg: (
+    bar-height: 4.75rem,
+    font-size-factor: 2
+  )
+);

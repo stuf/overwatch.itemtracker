@@ -2,7 +2,7 @@
  * @module Pages.CharacterPage
  */
 import * as React from 'karet';
-import * as U from 'karet.util';
+import K, * as U from 'karet.util';
 
 import { addPropsFromContext } from '../helpers';
 
@@ -41,7 +41,8 @@ const CharacterPage = ({ state, match }) => {
   };
 
   const progress = U.apply(U.divide, U.values(status));
-  const text = U.always(U.string`${status.completed} / ${status.total} unlocks`);
+  const text = U.template(U.values(status)).map(([x, y]) => `${x} / ${y} unlocks`);
+  const barColor = U.view(['colors', 'primary'], char);
 
   return (
     <section className="page page--character">
@@ -54,7 +55,7 @@ const CharacterPage = ({ state, match }) => {
         <div className="completion completion--character sticky-top">
           <div className="row align-items-center">
             <div className="col">
-              <CompletionProgress {...{ progress, text }} />
+              <CompletionProgress {...{ progress, text, barColor }} />
             </div>
             <aside className="col-auto total-cost align-middle">
               <span>

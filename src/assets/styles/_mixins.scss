@@ -5,3 +5,22 @@
     $text-contrast-shadow-blur
     $text-contrast-shadow-color;
 }
+
+/**
+ * Mixin for generating a progress bar based on a supplied map of parameters
+ */
+@mixin completion-progress-bar($size, $map) {
+  .completion-progress-#{$size} {
+    $font-size: map-get($map, font-size-factor);
+    $height: map-get($map, bar-height);
+
+    .progress {
+      &, &-bar {
+        height: $height;
+      }
+      &-text {
+        font-size: $font-size-base * $font-size;
+      }
+    }
+  }
+}

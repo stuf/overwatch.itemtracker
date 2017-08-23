@@ -1,5 +1,3 @@
-@import 'styles/variables';
-
 $active-border-darken: 20%;
 
 $button-font-family: 'Futura', sans-serif;
@@ -43,6 +41,12 @@ $button-font-family: 'Futura', sans-serif;
 }
 
 // Tracker specific
+
+// Generate classes for different sizes of progress bars
+
+@each $label, $map in $completion-progress-sizes {
+  @include completion-progress-bar($label, $map)
+}
 
 .completion {
   &.sticky-top {
