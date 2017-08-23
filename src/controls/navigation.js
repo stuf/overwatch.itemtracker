@@ -36,7 +36,7 @@ export const Roster = ({ characters, itemClassName = 'btn btn-secondary cards__c
 //
 
 /**
- * @class NavBar
+ *
  * @param state
  * @param isVisible
  * @param data

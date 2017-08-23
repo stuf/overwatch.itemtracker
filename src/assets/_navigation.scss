@@ -4,8 +4,21 @@ nav.top-navigation {
   height: 3.2rem;
   padding: 0.4rem;
   background-color: $color-overwatch-dark-gray;
+  position: relative;
+  z-index: 20000;
 }
 
 .roster {
+  position: absolute;
+  z-index: 1001;
   animation: all 0.33s;
+  width: 80vw;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: $color-overwatch-dark-gray;
+  border-radius: 0.2rem;
+
+  > a {
+    box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.4);
+  }
 }

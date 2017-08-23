@@ -1,0 +1,13 @@
+.icon {
+  height: $svg-icon-height;
+  width: $svg-icon-width;
+
+  path {
+    vector-effect: non-scaling-stroke;
+    // stroke: #f00;
+  }
+
+  &-currency {
+    fill: #fbab3a;
+  }
+}

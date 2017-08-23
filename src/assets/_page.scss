@@ -1,13 +1,50 @@
 @import 'variables';
 
+body, html {
+  background-color: $color-overwatch-dark-navy;
+}
+
 section.page {}
 
 section.page--character {
-  $cost-text-shadow-color: rgba(0, 0, 0, 0.7);
+  $cost-text-shadow-color: rgba(0, 0, 0, 0.5);
   $cost-text-shadow-blur: 0;
   $cost-text-shadow-offset: (1rem / 16);
   $cost-text-shadow-offset-x: $cost-text-shadow-offset;
   $cost-text-shadow-offset-y: $cost-text-shadow-offset;
+
+  .completion--character {
+    background: $color-overwatch-dark-navy;
+
+    &.sticky-top {
+      padding-top: 0.5rem;
+    }
+
+    .total-cost {
+      font-family: 'Futura', sans-serif;
+      font-size: 2.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  .progress {
+    position: relative;
+
+    &, &-bar {
+      height: 3rem;
+    }
+
+    &-text {
+      font-family: 'Futura', sans-serif;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      @include text-contrast-shadow;
+    }
+  }
 
   section.item-groups {
     // border: solid 2px #f00;
@@ -16,9 +53,21 @@ section.page--character {
       // border: solid 1px #f00 !important;
     }
 
+    .item-group {
+      font-family: 'Futura', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .item-group__header {
+      h3 { margin-bottom: 0; }
+    }
+
+    .item-group__status {
+      margin-left: 0.5rem;
+    }
+
     .item-group__header {}
     .item-group__list {
-      font-family: 'Futura', sans-serif;
       text-transform: uppercase;
       cursor: pointer;
     }
@@ -39,20 +88,17 @@ section.page--character {
 }
 
 section.page--home {
+  /**
+   * Home page total progress bar
+   */
   header {
-    .progress {
-      & {
-        background-color: #fff;
-        border: solid (1rem / 16) rgba($color-overwatch-dark-gray, 0.75);
-      }
+    &.progress--total.jumbotron {
+      background-color: darken($color-overwatch-dark-navy, 7.5%);
+    }
 
+    .progress {
       &, &-bar {
         height: 5rem;
-      }
-
-      &-bar {
-        background-color: $color-overwatch-orange;
-        font-size: $font-size-base * 3;
       }
     }
   }
@@ -60,6 +106,12 @@ section.page--home {
   .progress--total-costs {
     .progress--symbol {
       font-size: $font-size-base * 3;
+    }
+
+    dt {
+      font-family: 'Futura', sans-serif;
+      text-transform: uppercase;
+      font-weight: 400;
     }
 
     dd {
@@ -72,5 +124,15 @@ section.page--home {
         height: 2rem;
       }
     }
+  }
+}
+
+dd,
+dt,
+div,
+p,
+span {
+  .icon {
+    margin-left: 0.5rem;
   }
 }

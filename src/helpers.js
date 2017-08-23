@@ -30,3 +30,9 @@ export const showPct = n => `${n}%`;
 export const number = {
   showAsPercent: U.compose(showPct, toFixed(1), toPct)
 };
+
+const capitalizeString = U.lift1(L.modify(0, R.toUpper));
+
+export const string = {
+  capitalize: capitalizeString
+};

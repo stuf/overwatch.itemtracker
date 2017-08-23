@@ -11,15 +11,18 @@ import { number } from '../helpers';
 export const CompletionProgress =
   ({
      progress,
+     sticky,
      value = number.showAsPercent(progress),
      width = value,
-     minWidth = number.showAsPercent(0.075),
+     minWidth = number.showAsPercent(0),
      text = U.always(value)
    }) =>
-    <div className="completion completion-progress">
+    <div className={U.cns('completion completion-progress',
+                          U.ift(sticky, 'sticky-top'))}>
       <div className="progress">
         <div className="progress-bar"
-             style={{ width, minWidth }}>
+             style={{ width, minWidth }} />
+        <div className="progress-text">
           {U.apply(text, undefined)}
         </div>
       </div>

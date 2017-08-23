@@ -4,22 +4,19 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 
-import { toggle } from '../helpers';
+import { toggle, string } from '../helpers';
+import { Icon } from '../controls/icon';
+import { Icon as Icons } from '../assets/resources';
 import {
   Generic as G,
-  Entry as E,
   EntryList as EL,
   Items as I
 } from '../pages/meta';
 
+console.log({ Icon, Icons });
+
 //
 
-/**
- * @class Item
- * @param completed
- * @param item
- * @constructor
- */
 export const Item = ({ completed, item }) =>
   <li onClick={toggle(completed)}
       className={U.cns('list-group-item',
@@ -36,11 +33,6 @@ export const Item = ({ completed, item }) =>
 
 //
 
-/**
- * @class ItemGroupList
- * @param items
- * @constructor
- */
 export const ItemGroupList = ({ items }) =>
   <ul className={U.cns('list-group', 'item-group__list')}>
     {U.seq(items,
@@ -51,12 +43,6 @@ export const ItemGroupList = ({ items }) =>
 
 //
 
-/**
- * @class ItemGroup
- * @param items
- * @param name
- * @constructor
- */
 export const ItemGroup = ({ items, name }) =>
   <section className="item-groups">
     <div className="row">
@@ -66,13 +52,14 @@ export const ItemGroup = ({ items, name }) =>
                const group = U.view(i, items);
                const id = G.idFor(group);
                const data = G.dataFor(group);
+               const name = string.capitalize(id);
 
                return (
                  <article key={i} className="item-group col-6 mt-2">
-                   <header className="row item-group__header">
-                     <h3 className="col item-group__name">
-                       {id}
-                       <span className="col-3 text-right item-group__status">
+                   <header className="item-group__header">
+                     <h3>
+                       {name}
+                       <span className="item-group__status">
                          {I.totalCompletedItemCount(data)} / {I.totalItemCount(data)}
                        </span>
                      </h3>

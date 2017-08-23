@@ -4,7 +4,7 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 
-import currency from '../assets/images/currency.svg';
+import { CurrencyIcon } from '../assets/icons';
 import { addPropsFromContext, number } from '../helpers';
 import {
   Generic as G,
@@ -51,6 +51,8 @@ const HomePage = ({ state }) => {
           <div className="progress">
             <div className="progress-bar"
                  style={{ width: number.showAsPercent(percentageProgress) }}>
+            </div>
+            <div className="progress-text">
               {itemStats.completed} / {itemStats.total}
             </div>
           </div>
@@ -61,7 +63,7 @@ const HomePage = ({ state }) => {
                 <dt>Total</dt>
                 <dd>
                   {I.itemCost(allItems)}
-                  <img src={currency} className="currency" />
+                  <CurrencyIcon />
                 </dd>
               </dl>
             </div>
@@ -73,7 +75,7 @@ const HomePage = ({ state }) => {
                 <dt>Completed</dt>
                 <dd>
                   {I.completedItemCost(allItems)}
-                  <img src={currency} className="currency" />
+                  <CurrencyIcon />
                 </dd>
               </dl>
             </div>
@@ -83,7 +85,7 @@ const HomePage = ({ state }) => {
                 <dt>Left</dt>
                 <dd>
                   {costsLeft}
-                  <img src={currency} className="currency" />
+                  <CurrencyIcon />
                 </dd>
               </dl>
             </div>

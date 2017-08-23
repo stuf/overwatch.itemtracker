@@ -7,9 +7,9 @@ import * as U from 'karet.util';
 import { addPropsFromContext } from '../helpers';
 
 import { ItemGroup } from '../controls/item';
+import { CurrencyIcon } from '../assets/icons';
 import {
-  CompletionProgress,
-  CompletionStatus
+  CompletionProgress
 } from '../controls/progress';
 
 import {
@@ -41,21 +41,29 @@ const CharacterPage = ({ state, match }) => {
   };
 
   const progress = U.apply(U.divide, U.values(status));
+  const text = U.always(U.string`${status.completed} / ${status.total} unlocks`);
 
   return (
     <section className="page page--character">
       <div className="container">
-        <aside>
-          {E.totalCost(allItems)}
-        </aside>
-
         <header>
           <h2 className="display-2">{G.nameFor(char)}</h2>
           <h3>{G.classFor(char)}</h3>
         </header>
 
-        <CompletionProgress {...{ progress }} />
-        <CompletionStatus {...status} />
+        <div className="completion completion--character sticky-top">
+          <div className="row align-items-center">
+            <div className="col">
+              <CompletionProgress {...{ progress, text }} />
+            </div>
+            <aside className="col-auto total-cost align-middle">
+              <span>
+                {E.totalCost(allItems)}
+              </span>
+              <CurrencyIcon />
+            </aside>
+          </div>
+        </div>
 
         <button className="btn btn-lg btn-secondary"
                 onClick={e => {

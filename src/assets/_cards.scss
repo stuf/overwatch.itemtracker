@@ -6,8 +6,8 @@ $nav-card-space: 0.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    border: solid 1px #f00;
     padding: $nav-card-space $nav-card-container-spacing-x;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.4);
   }
 
   &__card {

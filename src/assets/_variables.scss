@@ -20,3 +20,17 @@ $color-overwatch-orange: rgb(249, 158, 26);
 $color-overwatch-dark-gray: rgb(67, 72, 76);
 $color-overwatch-dark-navy: rgb(64, 82, 117);
 $color-overwatch-blue: rgb(33, 143, 254);
+
+// Icons
+
+$svg-icon-width: 2rem;
+$svg-icon-height: 2rem;
+
+// Shadows
+
+$text-contrast-shadow-color: rgba(0, 0, 0, 0.7);
+$text-contrast-shadow-blur: 0;
+$text-contrast-shadow-offset: (1rem / 16);
+$text-contrast-shadow-offset-x: $text-contrast-shadow-offset;
+$text-contrast-shadow-offset-y: $text-contrast-shadow-offset;
+

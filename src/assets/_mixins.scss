@@ -1,0 +1,7 @@
+@mixin text-contrast-shadow() {
+  text-shadow:
+    $text-contrast-shadow-offset-x
+    $text-contrast-shadow-offset-y
+    $text-contrast-shadow-blur
+    $text-contrast-shadow-color;
+}
