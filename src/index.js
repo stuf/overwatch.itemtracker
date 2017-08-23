@@ -1,7 +1,7 @@
 import * as React from 'karet';
 import * as ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import './assets/styles.css';
+import './assets/styles/styles.css';
 
 import registerServiceWorker from './register-service-worker';
 
