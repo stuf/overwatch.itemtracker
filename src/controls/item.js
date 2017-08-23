@@ -5,15 +5,11 @@ import * as React from 'karet';
 import * as U from 'karet.util';
 
 import { toggle, string } from '../helpers';
-import { Icon } from '../controls/icon';
-import { Icon as Icons } from '../assets/resources';
 import {
   Generic as G,
   EntryList as EL,
   Items as I
 } from '../pages/meta';
-
-console.log({ Icon, Icons });
 
 //
 
