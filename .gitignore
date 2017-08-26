@@ -22,6 +22,7 @@ yarn-error.log*
 
 src/**/*.css
 # src/assets/fonts
+src/assets/heroes
 
 .idea/
 *.iml

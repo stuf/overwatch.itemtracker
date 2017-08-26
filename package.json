@@ -9,6 +9,7 @@
     "karet": "^1.2.2",
     "karet.util": "^0.13.1",
     "kefir": "^3.7.3",
+    "kefir.atom": "^5.3.4",
     "partial.lenses": "^11.17.0",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
@@ -23,6 +24,7 @@
     "eslint": "^4.5.0",
     "eslint-plugin-flowtype": "^2.35.0",
     "flow-bin": "^0.53.1",
+    "flow-typed": "^2.1.5",
     "jest-enzyme": "^3.8.0",
     "jsverify": "^0.8.2",
     "node-sass-chokidar": "^0.0.3",
@@ -41,6 +43,7 @@
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow"
   }
 }
