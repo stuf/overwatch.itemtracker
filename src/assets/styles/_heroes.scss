@@ -1,0 +1,19 @@
+$hero-list: (
+  ana, bastion, dva, doomfist, genji, hanzo,
+  junkrat, lucio, mccree, mei, mercy,
+  orisa, pharah, reaper, reinhardt, roadhog,
+  soldier-76, sombra, symmetra, torbjorn, tracer,
+  widowmaker, winston, zarya, zenyatta
+);
+
+@each $hero in $hero-list {
+  .hero-#{$hero} {
+    header > .hero-icon {
+      background-image: url('../heroes/#{$hero}/icon.png');
+      background-size: cover;
+      background-position: center center;
+      height: 6.25rem;
+      border: solid 1px #f00;
+    }
+  }
+}

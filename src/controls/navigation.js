@@ -54,7 +54,7 @@ export const NavBar = ({
             onClick={H.toggle(isVisible)}>
       {'≡'}
     </button>
-    <Link to="/" className="btn btn-primary float-left">
+    <Link to="/" className="btn btn-primary float-left ml-2">
       Home
     </Link>
 

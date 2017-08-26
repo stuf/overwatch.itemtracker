@@ -8,32 +8,38 @@ import { number } from '../helpers';
 
 //
 
-export const CompletionProgress =
-  ({
-     progress,
-     sticky,
-     barColor,
-     size = 'md',
-     value = number.showAsPercent(progress),
-     width = value,
-     minWidth = number.showAsPercent(0),
-     text = value
-   }) =>
+const Size = {
+  MD: 'md'
+};
+
+const getXPos = U.compose(U.lift1(number.showAsPercent), U.negate, U.subtract(1));
+
+export const CompletionProgress = ({
+    progress,
+    sticky,
+    barColor,
+    text,
+    size = Size.MD
+  }) => {
+  const xPos = getXPos(progress);
+  const style = {
+    transform: U.string`translateX(${xPos})`,
+    backgroundColor: barColor
+  };
+
+  return (
     <div className={U.cns('completion completion-progress',
                           U.ift(sticky, 'sticky-top'),
                           U.string`completion-progress-${size}`)}>
       <div className="progress">
-        <div className="progress-bar"
-             style={{
-               width,
-               minWidth,
-               backgroundColor: U.ift(U.not(U.isEmpty(barColor)), barColor)
-             }} />
+        <div className="progress-bar" {...{ style }} />
         <div className="progress-text">
           {text}
         </div>
       </div>
-    </div>;
+    </div>
+  );
+};
 
 export const CompletionStatus =
   ({ completed, total }) =>

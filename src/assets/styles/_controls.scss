@@ -20,6 +20,9 @@ $button-font-family: 'Futura', sans-serif;
 
   &-bar {
     background-color: $color-overwatch-orange;
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transform: translateX(-101%);
   }
 
   &-text {
@@ -38,6 +41,13 @@ $button-font-family: 'Futura', sans-serif;
   font-family: $button-font-family;
   text-transform: uppercase;
   @include text-contrast-shadow;
+
+  &[class*="btn-outline-"] {
+    &.active {
+      color: $color-overwatch-dark-navy;
+      @include text-contrast-shadow($color: rgba(255, 0, 0, 0.76))
+    }
+  }
 }
 
 // Tracker specific

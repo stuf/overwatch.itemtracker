@@ -1,0 +1,49 @@
+
+/**
+ * Character roster
+ */
+
+// Variables
+
+$roster-text-color: #fff;
+$roster-hover-bg: $color-overwatch-blue;
+$roster-card-transform: skew(-10deg);
+
+// Roster SVG
+#roster-card {
+  transform: $roster-card-transform;
+
+  rect {
+    left: 0;
+    top: 0;
+    width: 8.75rem;
+    height: 8.75rem;
+  }
+}
+
+.roster {
+  .roster-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .roster-link {
+    clip-path: url(#roster-card);
+    color: $roster-text-color;
+    margin: 0 -0.4rem;
+    padding: 0 0.4rem;
+    width: 8.75rem;
+
+    .roster-icon {
+      width: 100%;
+      height: 8.75rem;
+      border: solid 2px #f00;
+    }
+
+    &:hover {
+      text-decoration: none;
+      background-color: $roster-hover-bg;
+    }
+  }
+}

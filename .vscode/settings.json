@@ -1,3 +1,4 @@
 {
-  "mocha.enabled": false
+  "mocha.enabled": false,
+  "javascript.validate.enable": false
 }

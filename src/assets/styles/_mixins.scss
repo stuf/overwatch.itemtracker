@@ -1,4 +1,8 @@
-@mixin text-contrast-shadow() {
+@mixin text-contrast-shadow(
+  $offset-x: $text-contrast-shadow-offset-x,
+  $offset-y: $text-contrast-shadow-offset-y,
+  $blur: $text-contrast-shadow-blur,
+  $color: $text-contrast-shadow-color) {
   text-shadow:
     $text-contrast-shadow-offset-x
     $text-contrast-shadow-offset-y
@@ -23,4 +27,8 @@
       }
     }
   }
+}
+
+@mixin hero-icon($id) {
+  background-image: url('../heroes/#{$id}/icon.png');
 }
