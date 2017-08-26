@@ -58,13 +58,19 @@ const allCharItems = U.lift1(L.collect(allCharItemsL));
 const itemCount = U.lift1(L.count(L.elems));
 const completedItemCount = U.lift1(L.countIf(isCompleted, L.elems));
 
-//
+const completedItems = [L.elems, 'completed'];
+const selectAll = L.foldTraversalLens(L.and);
 
 // Character-specific
 
+const baseT = ['items', L.elems, 'data'];
+const selectAllIn = L.set([baseT, selectAll(completedItems)], true);
+const deselectAllIn = L.remove([baseT, selectAll(completedItems)]);
+
 export const Character = {
   forName: (name, atom) => U.view(findByName(name), atom),
-  completeAllFor: atom => atom.modify(L.set([characterItemsT, 'completed'], true))
+  unCompleteAllFor: atom => atom.modify(deselectAllIn),
+  completeAllFor: atom => atom.modify(selectAllIn)
 };
 
 export const Items = {
