@@ -18,17 +18,18 @@ const KefirLink = fromClass(Link);
 /**
  * @class Roster
  * @param characters
+ * @param baseName
  * @param itemClassName
  * @constructor
  */
-export const Roster = ({ characters, itemClassName = 'btn btn-secondary cards__card' }) =>
+export const Roster = ({ characters, baseName, itemClassName = 'btn btn-secondary cards__card' }) =>
   <div className="roster cards cards--characters">
     {U.seq(characters,
            U.indices,
            U.mapCached(i =>
              <KefirLink className={itemClassName}
                         activeClassName={'active'}
-                        to={U.string`/character/${Nav.idAt(i, characters)}`}>
+                        to={U.string`${baseName}/character/${Nav.idAt(i, characters)}`}>
                {Nav.nameAt(i, characters)}
              </KefirLink>))}
   </div>;
@@ -45,6 +46,7 @@ export const Roster = ({ characters, itemClassName = 'btn btn-secondary cards__c
  */
 export const NavBar = ({
   state,
+  baseName,
   isVisible = Nav.isNavigationVisibleFor(state),
   data = U.view(NavL.dataFor, state),
   hasCharacters = U.not(U.isEmpty(data))
@@ -54,11 +56,11 @@ export const NavBar = ({
             onClick={H.toggle(isVisible)}>
       {'≡'}
     </button>
-    <Link to="/" className="btn btn-primary float-left ml-2">
+    <KefirLink to={U.string`${baseName}`} className="btn btn-primary float-left ml-2">
       Home
-    </Link>
+    </KefirLink>
 
     {U.ifte(hasCharacters,
-            U.ift(isVisible, <Roster characters={data} />),
+            U.ift(isVisible, <Roster characters={data} baseName={baseName} />),
             <div>No characters found.</div>)}
   </nav>;

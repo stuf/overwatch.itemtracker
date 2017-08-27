@@ -21,7 +21,7 @@ import {
  * @returns {XML}
  * @constructor
  */
-const HomePage = ({ state }) => {
+const HomePage = ({ state, match }) => {
   const chars = G.dataFor(state);
 
   const getProgressFor = U.compose(U.apply(U.divide), U.values);
@@ -103,7 +103,7 @@ const HomePage = ({ state }) => {
             </clipPath>
           </defs>
         </svg> */}
-        <Roster list={chars} />
+        <Roster list={chars} baseName={match.url} />
       </section>
     </section>
   );

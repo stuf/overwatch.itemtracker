@@ -12,7 +12,7 @@ import {
 const getProgressFor = U.compose(U.apply(U.divide), U.values);
 const getProgress = o => U.apply(U.divide, U.values(o));
 
-export const Roster = ({ list }) =>
+export const Roster = ({ list, baseName }) =>
   <div className="roster-list">
     {U.seq(list,
            U.indices,
@@ -32,7 +32,7 @@ export const Roster = ({ list }) =>
              const text = U.join(' / ', U.values(charItemStats));
 
              return (
-               <Link karet-lift to={U.string`/character/${id}`}
+               <Link karet-lift to={U.string`${baseName}/character/${id}`}
                      className={U.cns('roster-link', U.string`hero-${id}`)}>
                  <header>
                    <div className="hero-icon" />
