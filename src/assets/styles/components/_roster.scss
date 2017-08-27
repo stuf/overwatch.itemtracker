@@ -7,7 +7,9 @@
 
 $roster-text-color: #fff;
 $roster-hover-bg: $color-overwatch-blue;
+
 $roster-card-transform: skew(-10deg);
+$roster-card-width: 6.5rem;
 
 // Roster SVG
 #roster-card {
@@ -29,16 +31,19 @@ $roster-card-transform: skew(-10deg);
   }
 
   .roster-link {
-    clip-path: url(#roster-card);
+    // clip-path: url(#roster-card);
+    border: solid (1rem / 16) rgba(255, 255, 255, 0.87);
+    border-radius: 0.2rem;
     color: $roster-text-color;
-    margin: 0 -0.4rem;
-    padding: 0 0.4rem;
-    width: 8.75rem;
+    width: $roster-card-width;
 
     .roster-icon {
       width: 100%;
       height: 8.75rem;
-      border: solid 2px #f00;
+    }
+
+    .progress {
+      margin-bottom: 0;
     }
 
     &:hover {

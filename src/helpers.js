@@ -26,6 +26,13 @@ export const toggle = <T, E>(atom: Atom<T, E>) => (e: Event) => {
 
 
 
+// Controls
+
+// Progress
+
+export const getProgressFor = U.compose(U.apply(U.divide), U.values);
+export const getProgress = o => U.apply(U.divide, U.values(o));
+
 //
 
 export const toInt = (n: string) => parseInt(n, 10);
@@ -46,9 +53,13 @@ export const string = {
   capitalize: capitalizeString
 };
 
-export const withPreventDefault = (fn: any) => (e: Event) => {
-  e.preventDefault();
-  fn();
-};
+type EventFn = (event: Event) => void;
+type WithPreventDefaultFn = (fn: any) => EventFn;
+
+export const withPreventDefault: WithPreventDefaultFn =
+  fn => e => {
+    e.preventDefault();
+    fn();
+  };
 
 //

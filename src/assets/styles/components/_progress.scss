@@ -1,0 +1,33 @@
+// Progress
+
+.progress {
+  & {
+    position: relative;
+    background-color: darken($color-overwatch-dark-navy, 7.5%);
+    border: solid (1rem / 16) darken($color-overwatch-dark-navy, 15%);
+    margin-bottom: 0.5rem;
+  }
+
+  &, &-bar {
+    height: 3rem;
+  }
+
+  &-bar {
+    background-color: $color-overwatch-orange;
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transform: translateX(-101%);
+  }
+
+  &-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: $font-size-base * 3;
+    font-family: $font-family-alternative;
+
+    @include text-contrast-shadow;
+  }
+}
+

@@ -18,3 +18,8 @@ export const NavBarV = {
   idAt: propForItem('id'),
   isNavigationVisibleFor: U.view(['navigation', 'show'])
 };
+
+// Progress
+
+export const getProgressFor = U.compose(U.apply(U.divide), U.values);
+export const getProgress = o => U.apply(U.divide, U.values(o));

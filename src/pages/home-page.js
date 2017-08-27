@@ -3,11 +3,11 @@
  */
 import * as React from 'karet';
 import * as U from 'karet.util';
-import { Link } from 'react-router-dom';
 
 import { CurrencyIcon } from '../assets/icons';
 import { addPropsFromContext } from '../helpers';
 import { CompletionProgress } from '../controls/progress';
+import { Roster } from '../controls/roster';
 import {
   Generic as G,
   Items as I
@@ -25,7 +25,6 @@ const HomePage = ({ state }) => {
   const chars = G.dataFor(state);
 
   const getProgressFor = U.compose(U.apply(U.divide), U.values);
-  const getProgress = o => U.apply(U.divide, U.values(o));
 
   const allItems = I.collectAllItems(chars);
   const itemStats = {
@@ -104,40 +103,7 @@ const HomePage = ({ state }) => {
             </clipPath>
           </defs>
         </svg> */}
-        <div className="roster-list">
-          {U.seq(chars,
-                 U.indices,
-                 U.mapCached(i => {
-                   const c = U.view(i, chars);
-                   const allCharItems = I.collectCharacterItems(c);
-                   const id = G.idFor(c);
-                   const name = G.nameFor(c);
-                   const charColor = U.view(['colors', 'primary'], c);
-
-                   const charItemStats = {
-                     completed: I.totalCompletedItemCount(allCharItems),
-                     total: I.totalItemCount(allCharItems)
-                   };
-
-                   const charItemProgress = getProgress(charItemStats);
-                   const text = U.join(' / ', U.values(charItemStats));
-
-                   return (
-                    <Link karet-lift to={U.string`/character/${id}`}
-                          className={U.cns('roster-link mb-2 py-3', U.string`hero-${id}`)}>
-                      <header>
-                        <div className="hero-icon" />
-                        {name}
-                      </header>
-
-                      <CompletionProgress progress={charItemProgress}
-                                          size="sm"
-                                          barColor={charColor}
-                                          text={text} />
-                    </Link>
-                 );
-                 }))}
-        </div>
+        <Roster list={chars} />
       </section>
     </section>
   );
