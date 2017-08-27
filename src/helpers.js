@@ -1,15 +1,11 @@
-// @flow
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
-import type { Atom } from 'kefir.atom';
 
 // React
 
-type AddPropsFromContextFn = (Component: React.ComponentType<*>, asProps: *) => React.Node;
-
-export const addPropsFromContext: AddPropsFromContextFn =
+export const addPropsFromContext =
   (Component, asProps = L.props('state')) =>
     U.withContext((props, ctx) =>
       <Component {...{ ...props, ...L.get(asProps, ctx) }} />);
@@ -19,7 +15,7 @@ export const addPropsFromContext: AddPropsFromContextFn =
 const modifyA = R.curryN(2, (fn, atom) => atom.modify(fn));
 const setA = R.curryN(2, (fn, atom) => atom.set(fn));
 
-export const toggle = <T, E>(atom: Atom<T, E>) => (e: Event) => {
+export const toggle = atom => e => {
   e.preventDefault();
   atom.modify(R.not);
 };
@@ -35,13 +31,13 @@ export const getProgress = o => U.apply(U.divide, U.values(o));
 
 //
 
-export const toInt = (n: string) => parseInt(n, 10);
-export const toFixed = (ds: number) => (n: number) => n.toFixed(ds);
-export const toPct: (x: number) => number = R.multiply(100);
+export const toInt = n => parseInt(n, 10);
+export const toFixed = ds => (n: number) => n.toFixed(ds);
+export const toPct = R.multiply(100);
 
 // Presentation
 
-export const showPct = (n: number) => `${n}%`;
+export const showPct = n => `${n}%`;
 
 export const number = {
   showAsPercent: U.compose(showPct, toFixed(1), toPct)
@@ -53,13 +49,8 @@ export const string = {
   capitalize: capitalizeString
 };
 
-type EventFn = (event: Event) => void;
-type WithPreventDefaultFn = (fn: any) => EventFn;
-
-export const withPreventDefault: WithPreventDefaultFn =
+export const withPreventDefault =
   fn => e => {
     e.preventDefault();
     fn();
   };
-
-//
