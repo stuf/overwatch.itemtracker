@@ -1,7 +1,7 @@
 {
   "name": "overwatch.itemtracker",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://stuf.github.io/overwatch.itemtracker",
   "dependencies": {
     "atom.storage": "^0.5.3",
     "atom.undo": "^0.5.3",
